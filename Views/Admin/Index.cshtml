@@ -1,0 +1,40 @@
+@model IEnumerable<VentaZapatillas.Models.Zapatilla>
+
+@{
+    ViewData["Title"] = "Panel de Administración";
+}
+
+<h1>Panel de Administración</h1>
+
+<p>
+    <a asp-controller="Zapatillas" asp-action="Create" class="btn btn-primary">Agregar Nueva Zapatilla</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Talla</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@item.Nombre</td>
+            <td>S/ @item.Precio</td>
+            <td>@item.Stock</td>
+            <td>@item.Talla</td>
+            <td>@item.Marca</td>
+            <td>
+                <a asp-controller="Zapatillas" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a> |
+                <a asp-controller="Zapatillas" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
