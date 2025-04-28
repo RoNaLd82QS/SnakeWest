@@ -1,0 +1,43 @@
+@model VentaZapatillas.Models.Zapatilla
+
+@{
+    ViewData["Title"] = "Eliminar Zapatilla";
+}
+
+<h1>Eliminar Zapatilla</h1>
+
+<h3>¿Estás seguro que deseas eliminar esta zapatilla?</h3>
+
+<div>
+    <h4>@Model.Nombre</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Descripción
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Descripcion
+        </dd>
+        <dt class="col-sm-2">
+            Precio
+        </dt>
+        <dd class="col-sm-10">
+            S/ @Model.Precio
+        </dd>
+        <dt class="col-sm-2">
+            Stock
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Stock
+        </dd>
+        <dt class="col-sm-2">
+            Talla
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Talla
+        </dd>
+        <dt class="col-sm-2">
+            Marca
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Marca
