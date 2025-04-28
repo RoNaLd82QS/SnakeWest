@@ -6,6 +6,40 @@
 
 <h1>Panel de Administración</h1>
 
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Zapatillas</h5>
+                <p class="card-text">@ViewBag.TotalZapatillas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success">
+            <div class="card-body">
+                <h5 class="card-title">Stock Disponible</h5>
+                <p class="card-text">@ViewBag.TotalStock</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <h5 class="card-title">Última Agregada</h5>
+                @if (ViewBag.UltimaZapatilla != null)
+                {
+                    <p class="card-text">@ViewBag.UltimaZapatilla.Nombre</p>
+                }
+                else
+                {
+                    <p class="card-text">-</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <p>
     <a asp-controller="Zapatillas" asp-action="Create" class="btn btn-primary">Agregar Nueva Zapatilla</a>
 </p>
@@ -24,17 +58,46 @@
     <tbody>
 @foreach (var item in Model)
 {
-        <tr>
-            <td>@item.Nombre</td>
-            <td>S/ @item.Precio</td>
-            <td>@item.Stock</td>
-            <td>@item.Talla</td>
-            <td>@item.Marca</td>
-            <td>
-                <a asp-controller="Zapatillas" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a> |
-                <a asp-controller="Zapatillas" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @if (!string.IsNullOrEmpty(item.ImagenUrl))
+            {
+                <img src="@item.ImagenUrl" alt="Imagen" width="80" height="80" style="object-fit: cover;" />
+            }
+        </td>
+        <td>@item.Nombre</td>
+        <td>S/ @item.Precio</td>
+        <td>@item.Stock</td>
+        <td>@item.Talla</td>
+        <td>@item.Marca</td>
+        <td>
+            <a asp-controller="Zapatillas" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-@item.Id">
+                Eliminar
+            </button>
+
+            <div class="modal fade" id="confirmDeleteModal-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estás seguro de que deseas eliminar <strong>@item.Nombre</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form asp-controller="Zapatillas" asp-action="Delete" asp-route-id="@item.Id" method="get" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
 }
     </tbody>
 </table>

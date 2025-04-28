@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http; // Agrega esto para IFormFile
 
 namespace VentaZapatillas.Models
 {
@@ -26,6 +27,11 @@ namespace VentaZapatillas.Models
         [StringLength(50)]
         public string Marca { get; set; }
 
-        public string ImagenUrl { get; set; }
+        [Display(Name = "Imagen")]
+        public string ImagenUrl { get; set; } // Solo para la URL guardada
+
+        [Display(Name = "Subir Imagen")]
+        public IFormFile ImagenSubida { get; set; } // SOLO para subir imagen (no se mapea a la base de datos)
     }
 }
+

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,14 @@ namespace VentaZapatillas.Controllers
         public async Task<IActionResult> Index()
         {
             var zapatillas = await _context.Zapatillas.ToListAsync();
+
+            // 📊 Datos para el dashboard
+            ViewBag.TotalZapatillas = zapatillas.Count;
+            ViewBag.TotalStock = zapatillas.Sum(z => z.Stock);
+            ViewBag.UltimaZapatilla = zapatillas.OrderByDescending(z => z.Id).FirstOrDefault();
+
             return View(zapatillas);
         }
     }
 }
+

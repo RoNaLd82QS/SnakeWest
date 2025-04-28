@@ -89,6 +89,7 @@ C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\VentaZapat
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\VentaZapatillas.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\VentaZapatillas.RazorAssemblyInfo.cache
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\VentaZapatillas.RazorAssemblyInfo.cs
+C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\VentaZapatillas.sourcelink.json
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\RONALD\Desktop\Programacion\VentaZapatillas\obj\Debug\net8.0\staticwebassets\msbuild.VentaZapatillas.Microsoft.AspNetCore.StaticWebAssets.props

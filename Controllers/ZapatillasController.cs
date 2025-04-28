@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using VentaZapatillas.Data;
 using VentaZapatillas.Models;
 using System.Threading.Tasks;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace VentaZapatillas.Controllers
 {
@@ -25,10 +28,29 @@ namespace VentaZapatillas.Controllers
 
         // GET: Zapatillas/Create
         [Authorize(Roles = "Administrador")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(Zapatilla zapatilla, IFormFile ImagenSubida)
+{
+    if (ModelState.IsValid)
+    {
+        if (ImagenSubida != null && ImagenSubida.Length > 0)
         {
-            return View();
+            var nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(ImagenSubida.FileName);
+            var rutaGuardado = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/zapatillas", nombreArchivo);
+
+            using (var stream = new FileStream(rutaGuardado, FileMode.Create))
+            {
+                await ImagenSubida.CopyToAsync(stream);
+            }
+
+            zapatilla.ImagenUrl = "/img/zapatillas/" + nombreArchivo;
         }
+
+        _context.Add(zapatilla);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    return View(zapatilla);
+}
 
         // POST: Zapatillas/Create
         [HttpPost]
