@@ -1,36 +1,45 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using VentaZapatillas.Data;
 using VentaZapatillas.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Agregar DbContext
+// Base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Agregar Identity
+// Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Inyectar servicio falso para enviar correos
+builder.Services.AddTransient<IEmailSender, FakeEmailSender>();
+
+// Configurar login obligatorio
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Razor Pages
+builder.Services.AddRazorPages();
+
+// MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Crear roles automáticamente
+// Crear roles y usuario administrador automáticamente
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
     string[] roles = { "Administrador", "Cliente" };
 
     foreach (var role in roles)
@@ -40,28 +49,39 @@ using (var scope = app.Services.CreateScope())
             await roleManager.CreateAsync(new IdentityRole(role));
         }
     }
-     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var user = await userManager.FindByEmailAsync("admin@gmail.com");
 
-    if (user != null && !await userManager.IsInRoleAsync(user, "Administrador"))
+    // Crear usuario admin si no existe
+    var adminEmail = "admin@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
     {
-        await userManager.AddToRoleAsync(user, "Administrador");
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true
+        };
+        await userManager.CreateAsync(adminUser, "Admin123$");
+    }
+
+    if (!await userManager.IsInRoleAsync(adminUser, "Administrador"))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Administrador");
     }
 }
 
+// Middlewares
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseAuthentication(); // <---- IMPORTANTE
+app.UseAuthentication();
 app.UseAuthorization();
 
+// Mapear Razor Pages y rutas MVC
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
-
-
-
-// corre la app
 app.Run();

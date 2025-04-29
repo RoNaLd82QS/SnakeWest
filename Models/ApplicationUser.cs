@@ -4,7 +4,7 @@ namespace VentaZapatillas.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        // Aquí podrías agregar más propiedades personalizadas si quieres
-        // Por ahora dejamos solo lo básico
+        // Aquí puedes agregar más propiedades en el futuro si deseas
+        // Por ahora, lo dejamos vacío y hereda todo de IdentityUser
     }
 }
