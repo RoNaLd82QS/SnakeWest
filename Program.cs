@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using VentaZapatillas.Data;
 using VentaZapatillas.Models;
+using VentaZapatillas.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,12 @@ builder.Services.AddRazorPages();
 // MVC
 builder.Services.AddControllersWithViews();
 
+// Sesión y carrito
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CarritoService>();
+
+// 👇 Build solo UNA VEZ aquí
 var app = builder.Build();
 
 // Crear roles y usuario administrador automáticamente
@@ -71,14 +78,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Middlewares
+// Middleware
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapear Razor Pages y rutas MVC
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",

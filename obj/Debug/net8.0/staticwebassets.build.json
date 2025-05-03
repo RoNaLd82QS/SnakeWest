@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a/ljV2B2u7azVxQq5hCBvi5PSdBSR+hfagy9Y97IRF4=",
+  "Hash": "W5IJq2/g0/hnTaS65AXEXYgPVnh5WXRvSnucR8QqZ3M=",
   "Source": "VentaZapatillas",
   "BasePath": "_content/VentaZapatillas",
   "Mode": "Default",
@@ -1250,6 +1250,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\zapatillas\\37a821cd-fd1e-4ba0-80c4-b648af1988da.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\RONALD\\Desktop\\Programacion\\VentaZapatillas\\wwwroot\\img\\zapatillas\\7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg",
+      "SourceId": "VentaZapatillas",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\RONALD\\Desktop\\Programacion\\VentaZapatillas\\wwwroot\\",
+      "BasePath": "_content/VentaZapatillas",
+      "RelativePath": "img/zapatillas/7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\zapatillas\\7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg"
     },
     {
       "Identity": "C:\\Users\\RONALD\\Desktop\\Programacion\\VentaZapatillas\\wwwroot\\img\\zapatillas\\a3290189-eb29-4456-b3c7-15f612ccea5a.jpg",

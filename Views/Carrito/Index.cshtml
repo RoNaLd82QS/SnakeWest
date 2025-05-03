@@ -1,0 +1,80 @@
+@model List<VentaZapatillas.Models.CarritoItem>
+@{
+    ViewData["Title"] = "Carrito de Compras";
+    var total = Model.Sum(i => i.Precio * i.Cantidad);
+}
+
+<h2 class="mb-4">🛒 Carrito de Compras</h2>
+
+<!-- Mensajes -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["InfoMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning text-center">Tu carrito está vacío.</div>
+}
+else
+{
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Precio (S/)</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@Model[i].Nombre</td>
+                    <td>@Model[i].Precio.ToString("0.00")</td>
+                    <td>@Model[i].Cantidad</td>
+                    <td>@((Model[i].Precio * Model[i].Cantidad).ToString("0.00"))</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <h4>Total: <span class="text-success fw-bold">S/ @total.ToString("0.00")</span></h4>
+
+        <div>
+            <form asp-action="Limpiar" asp-controller="Carrito" method="get" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">
+                    🗑️ Vaciar Carrito
+                </button>
+            </form>
+
+            <form asp-action="FinalizarPedido" asp-controller="Carrito" method="post" class="d-inline ms-2">
+                <button type="submit" class="btn btn-success" onclick="return confirm('¿Deseas confirmar el pedido?');">
+                    ✅ Finalizar Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+}

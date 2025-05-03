@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Lista de Zapatillas";
 }
+
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -11,19 +12,17 @@
     </div>
 }
 
-
-
-<h1>Lista de Zapatillas</h1>
+<h1 class="mb-4">Lista de Zapatillas</h1>
 
 @if (User.IsInRole("Administrador"))
 {
     <p>
-        <a asp-action="Create" class="btn btn-primary">Agregar Nueva Zapatilla</a>
+        <a asp-action="Create" class="btn btn-primary">➕ Agregar Nueva Zapatilla</a>
     </p>
 }
 
-<table class="table">
-    <thead>
+<table class="table table-hover align-middle text-center">
+    <thead class="table-light">
         <tr>
             <th>Nombre</th>
             <th>Descripción</th>
@@ -32,36 +31,50 @@
             <th>Talla</th>
             <th>Marca</th>
             <th>Imagen</th>
-            @if (User.IsInRole("Administrador"))
-            {
-                <th>Acciones</th>
-            }
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
-{
-        <tr>
-            <td>@item.Nombre</td>
-            <td>@item.Descripcion</td>
-            <td>S/ @item.Precio</td>
-            <td>@item.Stock</td>
-            <td>@item.Talla</td>
-            <td>@item.Marca</td>
-            <td>
-                @if (!string.IsNullOrEmpty(item.ImagenUrl))
-                {
-                    <img src="@item.ImagenUrl" alt="Imagen" width="80" />
-                }
-            </td>
-            @if (User.IsInRole("Administrador"))
-            {
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-            }
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Descripcion</td>
+                <td>S/ @item.Precio</td>
+                <td>@item.Stock</td>
+                <td>@item.Talla</td>
+                <td>@item.Marca</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImagenUrl))
+                    {
+                        <img src="@item.ImagenUrl" alt="Imagen" width="80" class="rounded shadow-sm" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin imagen</span>
+                    }
+                </td>
+                <td>
+                    @{
+                        if (User.IsInRole("Administrador"))
+                        {
+                            <div class="d-flex flex-column gap-1">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">✏️ Editar</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <form asp-controller="Carrito" asp-action="Agregar" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="nombre" value="@item.Nombre" />
+                                <input type="hidden" name="precio" value="@item.Precio" />
+                                <button type="submit" class="btn btn-success btn-sm">🛒 Agregar</button>
+                            </form>
+                        }
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

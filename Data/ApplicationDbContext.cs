@@ -12,6 +12,8 @@ namespace VentaZapatillas.Data
         }
 
         public DbSet<Zapatilla> Zapatillas { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+    public DbSet<DetallePedido> DetallesPedido { get; set; }
     }
 }
 

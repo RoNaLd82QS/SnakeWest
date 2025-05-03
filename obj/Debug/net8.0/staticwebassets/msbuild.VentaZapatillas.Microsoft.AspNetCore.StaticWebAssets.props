@@ -48,6 +48,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\zapatillas\37a821cd-fd1e-4ba0-80c4-b648af1988da.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\zapatillas\7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>VentaZapatillas</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/VentaZapatillas</BasePath>
+      <RelativePath>img/zapatillas/7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\zapatillas\7ed60af6-0c36-49dc-8e3c-fb000cdcc774.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\zapatillas\a3290189-eb29-4456-b3c7-15f612ccea5a.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>VentaZapatillas</SourceId>
